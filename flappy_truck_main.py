@@ -12,12 +12,12 @@ black = (0, 0, 0)
 white = (255, 255, 255)
 red = (150, 0, 0)
 bright_red = (255, 0, 0)
-green = (0,150,0)
-bright_green = (0,255,0)
+green = (0, 150, 0)
+bright_green = (0, 255, 0)
 
 # TODO: IMPORT ALL SOUNDS FOR IN GAME SOUNDS
 
-block_color = (53,115,255)
+block_color = (53, 115, 255)
 
 car_width = 83
 car_height = 52
@@ -28,10 +28,12 @@ clock = pygame.time.Clock()
 
 carImg = pygame.image.load('flappy_truck_draw_pixel.png')
 
+
 def things_dodged(count):
     font = pygame.font.Font('freesansbold.ttf', 75)
     text = font.render(str(count), True, red)
-    gameDisplay.blit(text,(display_width/2,200))
+    gameDisplay.blit(text, (display_width/2, 200))
+
 
 def pipe_draw(thingx, thingy, thingw, thingh, color):
     pygame.draw.rect(gameDisplay, color, [thingx, 0, thingw, thingy])
@@ -43,22 +45,26 @@ def pipe_draw(thingx, thingy, thingw, thingh, color):
 
 # TODO: WRITE ALL SOUND HANDLING FUNCTIONS
 
+
 def car(x, y):
     gameDisplay.blit(carImg, (x, y))
 
+
 def text_objects(text, font):
-    textSurface = font.render(text, True, black)
-    return textSurface, textSurface.get_rect()
+    text_surface = font.render(text, True, black)
+    return text_surface, text_surface.get_rect()
+
 
 def message_display(text):
-    largeText = pygame.font.Font('freesansbold.ttf',75)
-    TextSurf, TextRect = text_objects(text, largeText)
-    TextRect.center = ((display_width/2),(display_height/2))
-    gameDisplay.blit(TextSurf, TextRect)
+    large_text = pygame.font.Font('freesansbold.ttf', 75)
+    text_surf, text_rect = text_objects(text, large_text)
+    text_rect.center = ((display_width/2), (display_height/2))
+    gameDisplay.blit(text_surf, text_rect)
 
     pygame.display.update()
 
     time.sleep(2)
+
 
 def button(msg, x, y, w, h, ic, ac, action=None):
     """
@@ -71,31 +77,26 @@ def button(msg, x, y, w, h, ic, ac, action=None):
     print(click)
 
     if x+w > mouse[0] > x and y+h > mouse[1] > y:
-        pygame.draw.rect(gameDisplay, ac, (x,y,w,h))
+        pygame.draw.rect(gameDisplay, ac, (x, y, w, h))
 
-        if click[0] == 1 and action != None:
+        if click[0] == 1 and action is not None:
             action()
     else:
-        pygame.draw.rect(gameDisplay, ic, (x,y,w,h))
+        pygame.draw.rect(gameDisplay, ic, (x, y, w, h))
 
-    smallText = pygame.font.Font('freesansbold.ttf', 20)
-    textSurf, textRect = text_objects(msg, smallText)
-    textRect.center = ((x + (w/ 2)), (y + (h / 2)))
-    gameDisplay.blit(textSurf, textRect)
+    small_text = pygame.font.Font('freesansbold.ttf', 20)
+    text_surf, text_rect = text_objects(msg, small_text)
+    text_rect.center = ((x + (w / 2)), (y + (h / 2)))
+    gameDisplay.blit(text_surf, text_rect)
+
 
 def unpause():
     global pause
     pause = False
 
 
-
-
 # TODO: WRITE SOUND HANDLING CODE FOR ALL GAME LOOP TYPES AND ADD TO GAME LOOPS/LOOP FUNCTIONS
 def paused():
-
-
-
-
     global pause
 
     while pause:
@@ -112,55 +113,53 @@ def paused():
 
         gameDisplay.fill(white)
 
+        large_text = pygame.font.SysFont('freesansbold.ttf', 75)
+        text_surf, text_rect = text_objects("Paused", large_text)
+        text_rect.center = ((display_width / 2), (display_height / 2))
+        gameDisplay.blit(text_surf, text_rect)
 
-
-        largeText = pygame.font.SysFont('freesansbold.ttf',75)
-        TextSurf, TextRect = text_objects("Paused", largeText)
-        TextRect.center = ((display_width / 2), (display_height / 2))
-        gameDisplay.blit(TextSurf, TextRect)
-
-        pipe_gap_starty = 200
-        pipe_startx = display_width / 2
+        pipe_gap_start_y = 200
+        pipe_start_x = display_width / 2
         pipe_width = 100
         pipe_gap_height = 400
 
-        pipe_draw(pipe_startx, pipe_gap_starty, pipe_width, pipe_gap_height, black)
+        pipe_draw(pipe_start_x, pipe_gap_start_y, pipe_width, pipe_gap_height, black)
 
-        button('Go Bro',100,display_height - 150,100,50,green,bright_green,unpause)
-        button('No Bro',display_width - 150 - 100,display_height - 150,100,50,red,bright_red,quitgame)
+        button('Go Bro', 100, display_height - 150, 100, 50, green, bright_green, unpause)
+        button('No Bro', display_width - 150 - 100, display_height - 150, 100, 50,
+               red, bright_red, quitgame)
 
         pygame.display.update()
         clock.tick(15)
 
+
 def crash():
-    largeText = pygame.font.SysFont('freesansbold.ttf',75)
-    TextSurf, TextRect = text_objects('You Crashed', largeText)
-    TextRect.center = ((display_width/2),(display_height/2))
-    gameDisplay.blit(TextSurf, TextRect)
+    large_text = pygame.font.SysFont('freesansbold.ttf', 75)
+    text_surf, text_rect = text_objects('You Crashed', large_text)
+    text_rect.center = ((display_width/2), (display_height/2))
+    gameDisplay.blit(text_surf, text_rect)
 
     while True:
         for event in pygame.event.get():
-            #print(event)
+            # print(event)
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
 
+        # gameDisplay.fill(white)
 
-        #gameDisplay.fill(white)
+        button("Go bro", 150, display_height - 150, 100, 50, green, bright_green, game_loop)
 
-        button("Go bro",150,display_height - 150,100,50,green,bright_green,game_loop)
-
-        button("No bro",display_width-150 - 100,display_height - 150,100,50,red,bright_red,quitgame)
+        button("No bro",
+               display_width-150 - 100, display_height - 150, 100, 50, red, bright_red, quitgame)
 
         pygame.display.update()
         clock.tick(15)
 
+
 def quitgame():
     pygame.quit()
     quit()
-
-
-
 
 
 def game_intro():
@@ -175,18 +174,18 @@ def game_intro():
                 quit()
 
         gameDisplay.fill(white)
-        largeText = pygame.font.Font('freesansbold.ttf',75)
-        TextSurf, TextRect = text_objects("Flappy Truck", largeText)
-        TextRect.center = ((display_width/2),(display_height/2))
-        gameDisplay.blit(TextSurf, TextRect)
+        large_text = pygame.font.Font('freesansbold.ttf', 75)
+        text_surf, text_rect = text_objects("Flappy Truck", large_text)
+        text_rect.center = ((display_width/2), (display_height/2))
+        gameDisplay.blit(text_surf, text_rect)
 
         mouse = pygame.mouse.get_pos()
 
-        #print(mouse)
+        # print(mouse)
 
-        button("Go bro",150,450,100,50,green,bright_green,game_loop)
+        button("Go bro", 150, 450, 100, 50, green, bright_green, game_loop)
 
-        button("No bro",display_width-150-100,450,100,50,red,bright_red,quitgame)
+        button("No bro", display_width-150-100, 450, 100, 50, red, bright_red, quitgame)
 
         pygame.display.update()
         clock.tick(15)
@@ -200,25 +199,21 @@ def game_loop():
     y_pix_vel = 0
     y_pix_accel = 0.5
 
-    pipe_startx = display_width + 50
+    pipe_start_x = display_width + 50
     pipe_x_speed = -2
     pipe_width = 100
     pipe_gap_height = 250
-    pipe_gap_starty = random.randrange(50,
-                        display_width - 50 - pipe_gap_height)
+    pipe_gap_start_y = random.randrange(50, display_width - 50 - pipe_gap_height)
 
-    thingCount = 1
+    thing_count = 1
 
     dodged = 0
 
-    gameExit = False
+    game_exit = False
 
     passed_pipe = False
     
-    while not gameExit:
-
-
-
+    while not game_exit:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -243,11 +238,6 @@ def game_loop():
                 else:
                     y_pix_vel += -4.5
 
-
-
-
-
-
         """
         Add y pixel velocity to y position
         Add y pixel acceleration to y pixel velocity
@@ -263,13 +253,11 @@ def game_loop():
         """
         gameDisplay.fill(white)
 
-
-
         """
         Draw pipe with current pipe parameters
         """
         # things(thingx, thingy, thingw, thingh, color)
-        pipe_draw(pipe_startx, pipe_gap_starty, pipe_width, pipe_gap_height, black)
+        pipe_draw(pipe_start_x, pipe_gap_start_y, pipe_width, pipe_gap_height, black)
 
         """
         Draw car in current x y pos
@@ -288,36 +276,35 @@ def game_loop():
             Recycle pipe position, randomize pipe opening, add dodged count
             add to pipe left speed
         """
-        if pipe_startx < 0 - pipe_width:
-            pipe_startx = display_width + 50
-            pipe_gap_starty = random.randrange(50, display_height - (50 + pipe_gap_height))
+        if pipe_start_x < 0 - pipe_width:
+            pipe_start_x = display_width + 50
+            pipe_gap_start_y = random.randrange(50, display_height - (50 + pipe_gap_height))
             pipe_x_speed += -.5
             passed_pipe = False
 
-        if pipe_startx < x and passed_pipe == False:
+        if pipe_start_x < x and passed_pipe is False:
             dodged += 1
             passed_pipe = True
 
         """
         pipe crash checking conditions, first if for y pos, nested if for x pos
         """
-        if y < pipe_gap_starty or y + car_height > pipe_gap_starty + pipe_gap_height:
+        if y < pipe_gap_start_y or y + car_height > pipe_gap_start_y + pipe_gap_height:
             print('y crossover')
 
-            if x < pipe_startx + pipe_width and x+car_width > pipe_startx:
+            if x < pipe_start_x + pipe_width and x+car_width > pipe_start_x:
                 print('x crossover')
                 crash()
 
-
-
         # shift pipe left by pipe x speed
-        pipe_startx += pipe_x_speed
+        pipe_start_x += pipe_x_speed
 
         # display dodged count
         things_dodged(dodged)
 
         pygame.display.update()
         clock.tick(60)
+
 
 """
 fonts = pygame.font.get_fonts()
@@ -326,4 +313,3 @@ print(fonts)
 game_intro()
 game_loop()
 quitgame()
-

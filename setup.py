@@ -6,9 +6,9 @@ os.environ['TK_LIBRARY'] = os.path.join(PYTHON_INSTALL_DIR, 'tcl', 'tk8.6')
 executables = [cx_Freeze.Executable("pygame_sound_music.py")]
 
 cx_Freeze.setup(
-    name = "Flappy Truck",
+    name="Flappy Truck",
     options={"build_exe": {"packages":["pygame"],
-                           "include_files":["smol_truck_is_smol.gif"]}},
-    executables = executables
+                           "include_files": ["smol_truck_is_smol.gif"]}},
+    executables=executables
 
     )
